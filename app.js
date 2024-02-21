@@ -3,10 +3,16 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+const mongoose = require('mongoose');
+
+// mongoose.set('strictQuery', false);
+// mongoose.connect(process.env.MONGO_URL, {
+//   useNewUrlParser: true,
+// });
 
 const index = require('./routes/index');
-const users = require('./routes/users');
-const join = require('./routes/join');
+const user = require('./routes/user');
+const login = require('./routes/login');
 const app = express();
 
 // view engine setup
@@ -25,8 +31,8 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/index', index);
-app.use('/', join);
-app.use('/users', users);
+app.use('/', login);
+app.use('/user', user);
 
 app.use(function (req, res, next) {
   next(createError(404));
