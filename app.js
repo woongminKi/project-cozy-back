@@ -3,8 +3,7 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const mongoose = require('mongoose');
-
+// const mongoose = require('mongoose');
 // mongoose.set('strictQuery', false);
 // mongoose.connect(process.env.MONGO_URL, {
 //   useNewUrlParser: true,
@@ -31,8 +30,8 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/index', index);
-app.use('/', login);
-app.use('/user', user);
+// app.use('/', login);
+// app.use('/user', user);
 
 app.use(function (req, res, next) {
   next(createError(404));
