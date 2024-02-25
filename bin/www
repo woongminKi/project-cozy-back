@@ -7,7 +7,7 @@ const PORT = normalizePort(process.env.PORT || '80');
 app.set('port', PORT);
 
 const server = http.createServer(app);
-mySocket(server.listen(PORT));
+mySocket(server.listen(PORT), app);
 
 // server.listen(port);
 server.on('error', onError);
