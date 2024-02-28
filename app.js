@@ -13,16 +13,17 @@ const index = require('./routes/index');
 // const user = require('./routes/user');
 // const login = require('./routes/login');
 const app = express();
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 const corsOptions = {
   origin: process.env.COZY_CLIENT_URL,
   credentials: true,
 };
 app.use(cors(corsOptions));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(express.static('public'));
-// app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json({ limit: 5000000 }));
+app.use(express.urlencoded({ limit: 5000000, extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/index', index);
 // app.use('/', login);
