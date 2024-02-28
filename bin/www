@@ -3,11 +3,11 @@ const debug = require('debug')('project-cozy-back:server');
 const http = require('http');
 const mySocket = require('../socket/socket');
 
-const PORT = normalizePort(process.env.PORT || '80');
-app.set('port', PORT);
+const port = normalizePort(process.env.PORT || '80');
+app.set('port', port);
 
 const server = http.createServer(app);
-mySocket(server.listen(PORT), app);
+mySocket(server.listen(port), app);
 
 // server.listen(port);
 server.on('error', onError);
