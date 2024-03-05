@@ -2,7 +2,8 @@ const WebSocket = require('ws');
 const wsModule = require('ws');
 
 module.exports = (server) => {
-  const clientWss = new WebSocket.Server({ server });
+  // const clientWss = new WebSocket.Server({ server });
+  const clientWss = new WebSocket.Server({ port: 8008 });
   const bithumbWs = new wsModule(process.env.BITHUMB_SOCKET_URL);
   let coinInfo = null;
 
