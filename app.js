@@ -12,7 +12,7 @@ const hpp = require('hpp');
 //   useNewUrlParser: true,
 // });
 
-if (process.env.NOD_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   app.use(morgan('combined'));
   app.use(helmet({ constentSecurityPolicy: false }));
   app.use(hpp());
