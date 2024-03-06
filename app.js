@@ -3,22 +3,22 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const morgan = require('morgan');
-const helmet = require('helmet');
-const hpp = require('hpp');
+// const morgan = require('morgan');
+// const helmet = require('helmet');
+// const hpp = require('hpp');
 // const mongoose = require('mongoose');
 // mongoose.set('strictQuery', false);
 // mongoose.connect(process.env.MONGO_URL, {
 //   useNewUrlParser: true,
 // });
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(morgan('combined'));
-  app.use(helmet({ constentSecurityPolicy: false }));
-  app.use(hpp());
-} else {
-  app.use(morgan('dev'));
-}
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(morgan('combined'));
+//   app.use(helmet({ constentSecurityPolicy: false }));
+//   app.use(hpp());
+// } else {
+//   app.use(morgan('dev'));
+// }
 
 const index = require('./routes/index');
 // const user = require('./routes/user');
