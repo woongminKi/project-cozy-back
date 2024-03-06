@@ -16,10 +16,26 @@ const app = express();
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'ejs');
 
+const whitelist = [
+  'http://coiniseasy.xyz',
+  'http://coiniseasy.xyz:3000',
+  'https://coiniseasy.xyz',
+  'http://localhost:3000',
+];
 const corsOptions = {
-  origin: process.env.COZY_CLIENT_URL,
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 };
+// const corsOptions = {
+//   origin: process.env.COZY_CLIENT_URL,
+//   credentials: true,
+// };
 app.use(cors(corsOptions));
 app.use(express.json({ limit: 5000000 }));
 app.use(express.urlencoded({ limit: 5000000, extended: false }));
