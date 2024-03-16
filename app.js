@@ -39,7 +39,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json({ limit: 5000000 }));
 app.use(express.urlencoded({ limit: 5000000, extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
 app.use('/index', index);
 // app.use('/', login);
