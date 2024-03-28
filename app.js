@@ -29,9 +29,9 @@ const app = express();
 // app.set('view engine', 'ejs');
 
 const whitelist = [
-  'http://coiniseasy.xyz',
-  'http://coiniseasy.xyz:3000',
-  'https://coiniseasy.xyz',
+  'http://coin-is-easy.xyz',
+  'http://coin-is-easy.xyz:3000',
+  'https://coin-is-easy.xyz',
   'http://localhost:3000',
 ];
 const corsOptions = {
