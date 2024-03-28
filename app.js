@@ -21,6 +21,7 @@ const cors = require('cors');
 // }
 
 const index = require('./routes/index');
+const health = require('./routes/health');
 // const user = require('./routes/user');
 // const login = require('./routes/login');
 const app = express();
@@ -54,6 +55,7 @@ app.use(express.urlencoded({ limit: 5000000, extended: false }));
 app.use(express.static('public'));
 
 app.use('/index', index);
+app.use('/health', health);
 // app.use('/', login);
 // app.use('/user', user);
 
