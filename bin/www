@@ -3,7 +3,7 @@ const debug = require('debug')('project-cozy-back:server');
 const http = require('http');
 const mySocket = require('../socket/socket');
 
-const port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '8080');
 app.set('port', port);
 
 const server = http.createServer(app);
