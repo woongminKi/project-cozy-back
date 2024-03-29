@@ -58,6 +58,9 @@ app.use(
   express.static(path.join(__dirname, '../../project-cozy-clinet/build'))
 );
 
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../project-cozy-clinet/build'));
+});
 // app.use('/', login);
 app.use('/index', index);
 app.use('/health', health);
