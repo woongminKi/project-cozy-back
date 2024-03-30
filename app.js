@@ -22,7 +22,7 @@ const cors = require('cors');
 
 const index = require('./routes/index');
 const health = require('./routes/health');
-// const user = require('./routes/user');
+const user = require('./routes/user');
 // const login = require('./routes/login');
 const app = express();
 // app.set('views', path.join(__dirname, 'views'));
@@ -54,9 +54,9 @@ app.use(express.urlencoded({ limit: 5000000, extended: false }));
 // app.use(express.static(path.join(__dirname, 'public')));
 // app.use(express.static('public'));
 
-app.use(
-  express.static(path.join(__dirname, '../../project-cozy-clinet/build'))
-);
+// app.use(
+//   express.static(path.join(__dirname, '../../project-cozy-clinet/build'))
+// );
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../../project-cozy-clinet/build'));
@@ -64,7 +64,7 @@ app.get('/', (req, res) => {
 // app.use('/', login);
 app.use('/index', index);
 app.use('/health', health);
-// app.use('/user', user);
+app.use('/user', user);
 
 app.use(function (req, res, next) {
   next(createError(404));
