@@ -159,7 +159,7 @@ function normalizePort(val) {
 }
 
 // Create WebSocket server
-console.log('hello!!?!?!');
+console.log('hello?!!?!?!');
 const wss = new WebSocket.Server({ server });
 const bithumbWs = new wsModule(process.env.BITHUMB_SOCKET_URL);
 let coinInfo = null;
