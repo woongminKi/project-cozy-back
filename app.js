@@ -90,6 +90,9 @@ const cors = require('cors');
 const http = require('http'); // Add this line for HTTP server
 const WebSocket = require('ws'); // Add this line for WebSocket server
 const wsModule = require('ws');
+const mongoose = require('mongoose');
+mongoose.set('strictQuery', false);
+mongoose.connect(process.env.MONGO_URL);
 
 const index = require('./routes/index');
 const health = require('./routes/health');
