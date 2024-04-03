@@ -7,7 +7,7 @@ const { MESSAGE } = require('../utils/tokenInfo');
 router.get('/', function (req, res, next) {
   res.send('Here is users route');
 });
-router.post('/login', async function (req, res, next) {
+router.post('/login', verifyToken, async function (req, res, next) {
   const accessToken = req.body.header.accessToken;
   const refreshToken = req.body.header.refreshToken;
   const accessTokenExpiresIn = req.body.header.accessTokenExpiresIn;
@@ -15,30 +15,11 @@ router.post('/login', async function (req, res, next) {
   const { uid, user_name, user_image } = req.body.data;
   console.log('@@@@', uid, user_name, user_image);
   try {
-    // let user = await User.create({
-    //   uid,
-    //   displayName: user_name,
-    //   imgUrl: user_image,
-    //   asset: {
-    //     coins: [],
-    //   },
-    //   round: [
-    //     {
-    //       initialMoney: 10000000,
-    //       finalMoney: 0,
-    //     },
-    //   ],
-    //   access_token: accessToken,
-    //   refresh_token: refreshToken,
-    //   access_token_expires_in: accessTokenExpiresIn,
-    //   refresh_token_expires_in: refreshTokenExpiresIn,
-    // });
-    // console.log('디비에서 가져오는 유저 데이터11::', user);
-
-    let user = User.findOne({ uid: uid }).lean();
+    let user = await User.findOne({ uid: uid }).lean();
     console.log('user??', user);
+
     if (!user) {
-      await User.create({
+      user = await User.create({
         uid,
         displayName: user_name,
         imgUrl: user_image,
@@ -56,18 +37,19 @@ router.post('/login', async function (req, res, next) {
         access_token_expires_in: accessTokenExpiresIn,
         refresh_token_expires_in: refreshTokenExpiresIn,
       });
-      console.log('유저 디비 생성::', user);
+      console.log('유저 디비 생성::');
     } else {
       user = User.findOneAndUpdate(
         { uid: uid },
         {
+          login_yn: 'Y',
           access_token: accessToken,
           refresh_token: refreshToken,
           access_token_expires_in: accessTokenExpiresIn,
           refresh_token_expires_in: refreshTokenExpiresIn,
         }
       ).lean();
-      console.log('유저 디비 업데이트 데이터22::', user);
+      console.log('유저 디비 업데이트 데이터22::');
       if (
         user._update.refresh_token_expires_in >
         user._update.access_token_expires_in
@@ -83,6 +65,12 @@ router.post('/login', async function (req, res, next) {
   } catch (err) {
     console.log('로그인 도중에 에러::', err);
   }
+});
+
+router.post('/logout', async function (req, res, next) {
+  let { uid } = req.body.header;
+  let user = await User.findOneAndUpdate({ uid }, { login_yn: 'N' }).lean();
+  console.log('check user', user);
 });
 
 module.exports = router;

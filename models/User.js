@@ -80,6 +80,7 @@ const UserSchema = new mongoose.Schema({
   refresh_token: { type: String },
   access_token_expires_in: { type: String },
   refresh_token_expires_in: { type: String },
+  login_yn: { type: String, default: 'Y' },
 });
 
 const User = mongoose.model('User', UserSchema);
