@@ -10,25 +10,10 @@ async function verifyToken(req, res, next) {
     return;
   }
 
-  const accessToken = req.body.header.accessToken;
-  const refreshToken = req.body.header.refreshToken;
-  const accessTokenExpiresIn = req.body.header.accessTokenExpiresIn;
-  const refreshTokenExpiresIn = req.body.header.refreshTokenExpiresIn;
-  const { uid, user_name } = req.body.data;
-  console.log(
-    '뭐가 넘어와2?',
-    accessToken,
-    refreshToken,
-    accessTokenExpiresIn,
-    refreshTokenExpiresIn
-  );
-
-  try {
-    const checkUser = await User.findOne({ uid }).lean();
-    console.log('checkUser', checkUser);
-    if (checkUser) {
+  if (req.body.header.token) {
+    try {
       jwt.verify(
-        accessToken,
+        req.body.header.token,
         process.env.SECRET_KEY,
         async (error, decoded) => {
           if (error) {
@@ -37,45 +22,46 @@ async function verifyToken(req, res, next) {
             });
             next(errorData);
           }
-
           console.log('decoded::', decoded);
-          res.cookie = decoded;
+          const userData = await User.findOne({ uid: decoded.uid }).lean();
+          return res.json({ userData });
         }
       );
-      return next(req.body.data);
-    } else {
-      const payload = { uid, user_name, expires_in: accessTokenExpiresIn };
+    } catch (err) {
+      console.log('err in verifyToken with token', err);
+    }
+  } else {
+    const accessToken = req.body.header.accessToken;
+    const refreshToken = req.body.header.refreshToken;
+    const accessTokenExpiresIn = req.body.header.accessTokenExpiresIn;
+    const refreshTokenExpiresIn = req.body.header.refreshTokenExpiresIn;
+    const { uid, user_name } = req.body.data;
+    let payload = {
+      uid,
+      user_name,
+      accessToken,
+      refreshToken,
+      accessTokenExpiresIn,
+      refreshTokenExpiresIn,
+    };
+
+    console.log(
+      '뭐가 넘어와2?',
+      accessToken,
+      refreshToken,
+      accessTokenExpiresIn,
+      refreshTokenExpiresIn,
+      payload
+    );
+
+    try {
       const jwtToken = jwt.sign(payload, process.env.SECRET_KEY);
       console.log('jwtToken', jwtToken);
-      return res.json({ token: jwtToken });
+      res.json({ token: jwtToken });
+      next();
+    } catch (err) {
+      console.log('err in verifyToken', err);
     }
-
-    // const accessDecode = jwt.verify(accessToken, process.env.SECRET_KEY);
-    // console.log('accessDecode??', accessDecode);
-    // if (accessDecode) {
-    //   req.user = accessDecode;
-    //   res.cookie = '';
-    //   next();
-    // }
-  } catch (err) {
-    console.log('err in verifyToken', err);
-    // try {
-    //   const refreshDecode = jwt.verify(refreshToken, process.env.SECRET_KEY);
-    //   console.log('refreshDecode??', refreshDecode);
-    //   if (refreshDecode) {
-    //     res.cookie = refreshDecode;
-    //     next();
-    //   }
-    // } catch (err) {
-    //   console.log('err in verifyToken', err);
-    //   // if (err.message === ERROR_MESSAGE.jwtMalformed) {
-    //   //   next(createError(403, MESSAGE.EXPIRED_TOKEN));
-    //   // }
-
-    //   // if (err.message === ERROR_MESSAGE.jwtExpired) {
-    //   //   next(createError(403, MESSAGE.MALFORMED_TOKEN));
-    //   // }
-    // }
   }
 }
 
