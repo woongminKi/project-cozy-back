@@ -10,6 +10,7 @@ async function verifyToken(req, res, next) {
     return;
   }
 
+  // console.log('토큰쓰??', req.body.header.token);
   if (req.body.header.token) {
     try {
       jwt.verify(
@@ -24,7 +25,8 @@ async function verifyToken(req, res, next) {
           }
           console.log('decoded::', decoded);
           const userData = await User.findOne({ uid: decoded.uid }).lean();
-          return res.json({ userData });
+          res.json({ userData });
+          next();
         }
       );
     } catch (err) {
@@ -45,19 +47,15 @@ async function verifyToken(req, res, next) {
       refreshTokenExpiresIn,
     };
 
-    console.log(
-      '뭐가 넘어와2?',
-      accessToken,
-      refreshToken,
-      accessTokenExpiresIn,
-      refreshTokenExpiresIn,
-      payload
-    );
-
     try {
-      const jwtToken = jwt.sign(payload, process.env.SECRET_KEY);
-      console.log('jwtToken', jwtToken);
-      res.json({ token: jwtToken });
+      const jwtToken = jwt.sign(payload, process.env.SECRET_KEY, {
+        expiresIn: accessTokenExpiresIn,
+      });
+      const jwtRefreshToken = jwt.sign(payload, process.env.SECRET_KEY, {
+        expiresIn: refreshTokenExpiresIn,
+      });
+
+      res.json({ token: jwtToken, refreshToken: jwtRefreshToken });
       next();
     } catch (err) {
       console.log('err in verifyToken', err);
