@@ -97,8 +97,17 @@ mongoose.connect(process.env.MONGO_URL);
 const index = require('./routes/index');
 const health = require('./routes/health');
 const user = require('./routes/user');
+const stripe = require('./routes/stripe');
 
 const app = express();
+
+// const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const calculateOrderAmount = (items) => {
+  // Replace this constant with a calculation of the order's amount
+  // Calculate the order total on the server to prevent
+  // people from directly manipulating the amount on the client
+  return 1400;
+};
 
 // Middleware
 const whitelist = [
@@ -128,6 +137,7 @@ app.get('/', (req, res) => {
 app.use('/index', index);
 app.use('/health', health);
 app.use('/user', user);
+app.use('/stripe', stripe);
 
 app.use(function (req, res, next) {
   next(createError(404));

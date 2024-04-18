@@ -14,11 +14,9 @@ router.post('/login', verifyToken, async function (req, res, next) {
   const accessTokenExpiresIn = req.body.header.accessTokenExpiresIn;
   const refreshTokenExpiresIn = req.body.header.refreshTokenExpiresIn;
   const { uid, user_name, user_image } = req.body.data;
-  console.log('@@@@', uid, user_name, user_image);
   try {
     const userData = await User.findOne({ uid }).lean();
-    // console.log('userData db?', userData, userData.length);
-    if (userData.length > 0) {
+    if (userData === null) {
       await User.create({
         uid,
         displayName: user_name,
@@ -37,7 +35,7 @@ router.post('/login', verifyToken, async function (req, res, next) {
         access_token_expires_in: accessTokenExpiresIn,
         refresh_token_expires_in: refreshTokenExpiresIn,
       });
-      console.log('유저 디비 생성 완료!');
+      // console.log('유저 디비 생성 완료!');
     }
   } catch (err) {
     console.log('로그인 도중에 에러::', err);
@@ -56,7 +54,7 @@ router.post('/logout', verifyToken, async function (req, res, next) {
           });
           res.json({ errorData });
         }
-        console.log('decoded::', decoded);
+
         const user = await User.findOneAndUpdate(
           { uid: decoded.uid },
           { login_yn: 'N' }
