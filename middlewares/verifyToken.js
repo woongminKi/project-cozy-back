@@ -10,7 +10,7 @@ async function verifyToken(req, res, next) {
     return;
   }
 
-  // console.log('토큰쓰??', req.body.header.token);
+  console.log('토큰쓰??', req.body);
   if (req.body.header.token) {
     try {
       jwt.verify(
@@ -33,6 +33,7 @@ async function verifyToken(req, res, next) {
       console.log('err in verifyToken with token', err);
     }
   } else {
+    console.log('여기인가?1', req.body);
     const accessToken = req.body.header.accessToken;
     const refreshToken = req.body.header.refreshToken;
     const accessTokenExpiresIn = req.body.header.accessTokenExpiresIn;
@@ -48,13 +49,14 @@ async function verifyToken(req, res, next) {
     };
 
     try {
+      console.log('여기인가?2', payload, process.env.SECRET_KEY);
       const jwtToken = jwt.sign(payload, process.env.SECRET_KEY, {
         expiresIn: accessTokenExpiresIn,
       });
       const jwtRefreshToken = jwt.sign(payload, process.env.SECRET_KEY, {
         expiresIn: refreshTokenExpiresIn,
       });
-
+      console.log('여기인가?3', jwtToken, jwtRefreshToken);
       res.json({ token: jwtToken, refreshToken: jwtRefreshToken });
       next();
     } catch (err) {

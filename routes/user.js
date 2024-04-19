@@ -9,6 +9,7 @@ router.get('/', function (req, res, next) {
   res.send('Here is users route');
 });
 router.post('/login', verifyToken, async function (req, res, next) {
+  console.log('어떤 데이터 넘어와44?', req.body);
   const accessToken = req.body.header.accessToken;
   const refreshToken = req.body.header.refreshToken;
   const accessTokenExpiresIn = req.body.header.accessTokenExpiresIn;
@@ -16,6 +17,7 @@ router.post('/login', verifyToken, async function (req, res, next) {
   const { uid, user_name, user_image } = req.body.data;
   try {
     const userData = await User.findOne({ uid }).lean();
+    console.log('여기인가 55', userData);
     if (userData === null) {
       await User.create({
         uid,
@@ -35,36 +37,55 @@ router.post('/login', verifyToken, async function (req, res, next) {
         access_token_expires_in: accessTokenExpiresIn,
         refresh_token_expires_in: refreshTokenExpiresIn,
       });
-      // console.log('유저 디비 생성 완료!');
+      console.log('유저 디비 생성 완료!');
     }
+    console.log('여기인가 66', userData);
   } catch (err) {
     console.log('로그인 도중에 에러::', err);
   }
 });
 
-router.post('/logout', verifyToken, async function (req, res, next) {
+router.post('/logout', async function (req, res, next) {
   try {
-    jwt.verify(
-      req.body.header.token,
-      process.env.SECRET_KEY,
-      async (error, decoded) => {
-        if (error) {
-          const errorData = createError(401, error, {
-            message: '유효하지 않은 토큰입니다. ',
-          });
-          res.json({ errorData });
-        }
-
-        const user = await User.findOneAndUpdate(
-          { uid: decoded.uid },
-          { login_yn: 'N' }
-        ).lean();
-        console.log('check user', user);
+    console.log('로그아웃 데이터??', req.body.data);
+    const user = await User.findOneAndUpdate(
+      { uid: req.body.data },
+      {
+        login_yn: 'N',
+        access_token: '',
+        refresh_token: '',
+        access_token_expires_in: '',
+        refresh_token_expires_in: '',
       }
-    );
+    ).lean();
+    console.log('check logout user', user);
   } catch (err) {
     console.log('err in logout', err);
   }
 });
+// router.post('/logout', verifyToken, async function (req, res, next) {
+//   try {
+//     jwt.verify(
+//       req.body.header.token,
+//       process.env.SECRET_KEY,
+//       async (error, decoded) => {
+//         if (error) {
+//           const errorData = createError(401, error, {
+//             message: '유효하지 않은 토큰입니다. ',
+//           });
+//           res.json({ errorData });
+//         }
+
+//         const user = await User.findOneAndUpdate(
+//           { uid: decoded.uid },
+//           { login_yn: 'N' }
+//         ).lean();
+//         console.log('check user', user);
+//       }
+//     );
+//   } catch (err) {
+//     console.log('err in logout', err);
+//   }
+// });
 
 module.exports = router;
