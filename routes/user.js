@@ -8,7 +8,8 @@ const { MESSAGE } = require('../utils/tokenInfo');
 router.get('/', function (req, res, next) {
   res.send('Here is users route');
 });
-router.post('/login', verifyToken, async function (req, res, next) {
+// router.post('/login', verifyToken, async function (req, res, next) {
+router.post('/login', async function (req, res, next) {
   console.log('어떤 데이터 넘어와44?', req.body);
   const accessToken = req.body.header.accessToken;
   const refreshToken = req.body.header.refreshToken;
