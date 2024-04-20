@@ -38,12 +38,12 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json({ limit: 5000000 }));
 app.use(express.urlencoded({ limit: 5000000, extended: false }));
-// app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 // Serve static files
 // app.get('/', (req, res) => {
 //   res.sendFile(path.join(__dirname, '../../project-cozy-clinet/build'));
 // });
-app.use('/index', index);
+app.use('/', index);
 app.use('/health', health);
 app.use('/user', user);
 app.use('/stripe', stripe);
