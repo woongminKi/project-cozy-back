@@ -21,10 +21,10 @@ const app = express();
 const whitelist = [
   'http://coin-is-easy.xyz',
   'http://coin-is-easy.xyz:3000',
-  'https://coin-is-easy.xyz',
   'http://localhost:3000',
-  'http://localhost:8000',
-  'http://coin-is-easy.xyz:8000',
+  'https://coin-is-easy.xyz',
+  'http://coin-is-easy.xyz',
+  'http://coin-is-easy.xyz:3000',
 ];
 const corsOptions = {
   origin: function (origin, callback) {
