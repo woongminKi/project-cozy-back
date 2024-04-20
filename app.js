@@ -23,6 +23,7 @@ const whitelist = [
   'http://coin-is-easy.xyz:3000',
   'https://coin-is-easy.xyz',
   'http://localhost:3000',
+  'http://localhost:8000',
 ];
 const corsOptions = {
   origin: function (origin, callback) {
