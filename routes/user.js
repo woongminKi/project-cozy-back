@@ -10,7 +10,6 @@ router.get('/', function (req, res, next) {
 });
 router.post('/login', verifyToken, async function (req, res, next) {
   // router.post('/login', async function (req, res, next) {
-  console.log('어떤 데이터 넘어와44?', req.body);
   const accessToken = req.body.header.accessToken;
   const refreshToken = req.body.header.refreshToken;
   const accessTokenExpiresIn = req.body.header.accessTokenExpiresIn;
@@ -18,7 +17,7 @@ router.post('/login', verifyToken, async function (req, res, next) {
   const { uid, user_name, user_image } = req.body.data;
   try {
     const userData = await User.findOne({ uid }).lean();
-    console.log('여기인가 55', userData);
+    // console.log('여기인가 55', userData);
     if (userData === null) {
       await User.create({
         uid,
@@ -40,7 +39,6 @@ router.post('/login', verifyToken, async function (req, res, next) {
       });
       console.log('유저 디비 생성 완료!');
     }
-    console.log('여기인가 66', userData);
   } catch (err) {
     console.log('로그인 도중에 에러::', err);
   }
@@ -48,7 +46,7 @@ router.post('/login', verifyToken, async function (req, res, next) {
 
 router.post('/logout', async function (req, res, next) {
   try {
-    console.log('로그아웃 데이터??', req.body.data);
+    // console.log('로그아웃 데이터??', req.body.data);
     const user = await User.findOneAndUpdate(
       { uid: req.body.data },
       {

@@ -6,11 +6,11 @@ const { MESSAGE } = require('../utils/tokenInfo');
 
 async function verifyToken(req, res, next) {
   if (!req.body.header) {
-    console.log('뭐가 넘어와1?', req);
+    // console.log('뭐가 넘어와1?', req);
     return;
   }
 
-  console.log('토큰쓰??', req.body);
+  // console.log('토큰쓰??', req.body);
   if (req.body.header.token) {
     try {
       jwt.verify(
@@ -23,7 +23,7 @@ async function verifyToken(req, res, next) {
             });
             next(errorData);
           }
-          console.log('decoded::', decoded);
+          // console.log('decoded::', decoded);
           const userData = await User.findOne({ uid: decoded.uid }).lean();
           res.json({ userData });
           next();
@@ -33,7 +33,7 @@ async function verifyToken(req, res, next) {
       console.log('err in verifyToken with token', err);
     }
   } else {
-    console.log('여기인가?1', req.body);
+    // console.log('여기인가?1', req.body);
     const accessToken = req.body.header.accessToken;
     const refreshToken = req.body.header.refreshToken;
     const accessTokenExpiresIn = req.body.header.accessTokenExpiresIn;
@@ -49,14 +49,14 @@ async function verifyToken(req, res, next) {
     };
 
     try {
-      console.log('여기인가?2', payload, process.env.SECRET_KEY);
+      // console.log('여기인가?2', payload, process.env.SECRET_KEY);
       const jwtToken = jwt.sign(payload, process.env.SECRET_KEY, {
         expiresIn: accessTokenExpiresIn,
       });
       const jwtRefreshToken = jwt.sign(payload, process.env.SECRET_KEY, {
         expiresIn: refreshTokenExpiresIn,
       });
-      console.log('여기인가?3', jwtToken, jwtRefreshToken);
+      // console.log('여기인가?3', jwtToken, jwtRefreshToken);
       res.json({ token: jwtToken, refreshToken: jwtRefreshToken });
       next();
     } catch (err) {

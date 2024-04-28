@@ -5,7 +5,6 @@ const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 const router = express.Router();
 
 router.post('/create-checkout-session', async (req, res) => {
-  console.log('실행돼?', req, req.body);
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
