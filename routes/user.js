@@ -58,6 +58,8 @@ router.post('/logout', async function (req, res, next) {
       }
     ).lean();
     console.log('check logout user', user);
+
+    return res.json({ status: 200, message: 'Logout Success!' });
   } catch (err) {
     console.log('err in logout', err);
   }
