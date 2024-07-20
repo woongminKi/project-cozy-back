@@ -37,7 +37,7 @@ router.post('/login', verifyToken, async function (req, res, next) {
         access_token_expires_in: accessTokenExpiresIn,
         refresh_token_expires_in: refreshTokenExpiresIn,
       });
-      console.log('유저 디비 생성 완료!');
+      // console.log('유저 디비 생성 완료!');
     }
   } catch (err) {
     console.log('로그인 도중에 에러::', err);
@@ -57,7 +57,7 @@ router.post('/logout', async function (req, res, next) {
         refresh_token_expires_in: '',
       }
     ).lean();
-    console.log('check logout user', user);
+    // console.log('check logout user', user);
 
     return res.json({ status: 200, message: 'Logout Success!' });
   } catch (err) {
