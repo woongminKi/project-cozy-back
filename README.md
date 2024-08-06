@@ -37,7 +37,8 @@ Cozy가 여러분의 성투를 도와드리겠습니다.
 ## ✅ Features
 |                                          |                                          |
 | ---------------------------------------- | ---------------------------------------- | 
-|<p align="center"><video width="3000" src="https://github.com/user-attachments/assets/5b15f6dc-47fa-4be1-a8a0-f980b67c2b45"/></p><p align="center">👉 사용자는 **실시간으로 가상화폐의 시세를 차트로 보며**매수와 매도를 할 수 있습니다.</p>|<p align="center"><video width="3000" src="https://github.com/user-attachments/assets/02b2d8e6-326f-45f1-b6fe-a369825ea58a" /></p><div align="center">👉 사용자는 자산 내역에서**코인 별 실시간 수익률, 평가 손익 등**을 볼 수 있습니다.</div>
+|<p align="center"><video width="3000" src="https://github.com/user-attachments/assets/5b15f6dc-47fa-4be1-a8a0-f980b67c2b45"/></p><p align="center">👉 사용자는 **실시간으로 가상화폐의 시세를 차트로 보며**매수와 매도를 할 수 있습니다.</p>|<p align="center"><video width="3000" src="https://github.com/user-attachments/assets/02b2d8e6-326f-45f1-b6fe-a369825ea58a" /></p><div align="center">👉 사용자는 자산 내역에서**코인 별 실시간 수익률, 평가 손익 등**을 볼 수 있습니다.</div>|
+<div><p align="center"><video width="3000" src="https://github.com/user-attachments/assets/0ef14127-7844-49be-8942-c0e5074217ed"/></p><div align="center">👉 카카오로 로그인, 로그아웃을 할 수 있습니다.</div></div>
 
 ## 🖥 Tech Stack
 
